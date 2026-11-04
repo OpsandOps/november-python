@@ -159,30 +159,87 @@ def outer(func):
     return inner()
 
 # ======================== ...
-@outer
-def deco(a):
-    print(f"i am from the decorating function: {a}")
 
-# deco(10)
+# decorator ==============================
+# def outer(param1, param2):
+#     def decorator(func):
+#         def wrapper(*args, **kwargs):
+#             print(f"{param1} and {param2}")
+#             result = func(*args, **kwargs)
+#             print(f"{param1} and {param2}")
+#             return result
+#         return wrapper
+#     return decorator
+
+# @outer("args1", "args2")
+# def greet(name):
+#     print(f"hello {name}")
+
+# greet("john")
 
 
 # ===================CLASSES(OOP)===========
-class Animal:
-    # class property
-    species = "mammal"
-    age = 20
+# class names should always begim with capital letters
+# =============================================
 
-    # instance property
-    def __init__(self, color="red", sound="hoot"):
-        self.color = f"  {color}"
-        self.sound = f" the sound of the animal is {sound}"
+class Student:
+    # class attr
+    name = "Bizmarrow"
+    course = "Python"
 
-    #method
-    def getSpecies(self):
-        print(f"i am a {self.species} and my color is {self.color}")
- 
-print("="*50)
-horses = Animal()
-print(Animal.__static_attributes__)
-print(horses.color)
-print(horses.getSpecies())
+    def setName(self, *args):
+        self.name = args
+
+    def setCourse(self, *args):
+        self.course = args
+
+    def getName(self):
+        return self.name
+
+    # class properties
+    def __init__(self, age, state):
+        self.age = age
+        self.state = state
+
+    def changeState(self):
+        user_state = input("Enter your state here: ").lower().strip()
+        self.state = user_state
+        return f" new state : {user_state}"
+
+# student_One = Student("")
+
+# print("-" * 60)
+# print(student_One.__dict__)
+# student_One.name = "Timothy"
+# print(student_One.__dict__)
+# newName = student_One.setName("Torbita")
+# print(student_One.__dict__)
+# print(student_One.getName())
+# print(Student.name, Student.course)
+# print(dir(Student))
+# print(Student.__static_attributes__)
+# newname = Student.setName("Torbita")
+# print(newname)
+print('-' * 70)
+object = Student(20, "Abuja")
+# print(dir(Student))
+print(object.changeState())
+print(object.state)
+
+# paradigm in python OOP
+# Inheritance
+
+print('==' * 90)
+print("Inheritance =====")
+
+
+class Parent:
+    def __init__(self, parentname):
+        self.parentname = f"my name is {parentname}"
+
+class Child(Parent):
+    def __init__(self, childname, parentname):
+        super().__init__(parentname)
+        self.childname = childname
+
+

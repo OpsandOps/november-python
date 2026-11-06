@@ -220,11 +220,11 @@ class Student:
 # print(Student.__static_attributes__)
 # newname = Student.setName("Torbita")
 # print(newname)
-print('-' * 70)
-object = Student(20, "Abuja")
-# print(dir(Student))
-print(object.changeState())
-print(object.state)
+# print('-' * 70)
+# object = Student(20, "Abuja")
+# # print(dir(Student))
+# print(object.changeState())
+# print(object.state)
 
 # paradigm in python OOP
 # Inheritance
@@ -235,11 +235,85 @@ print("Inheritance =====")
 
 class Parent:
     def __init__(self, parentname):
-        self.parentname = f"my name is {parentname}"
+        self.parentname = f"my surname is {parentname}"
+
+    def changeParentName(self, name):
+        if not name:
+            return {"error": "requires name, no name given"}
+        self.parentname = name.strip().lower()
 
 class Child(Parent):
     def __init__(self, childname, parentname):
         super().__init__(parentname)
         self.childname = childname
 
+dad = Parent("Mandy")
+print(dad.__static_attributes__)
+son = Child("Daniel", "Mandy")
+print(son.__static_attributes__)
+print(son.childname, son.parentname)
+son.changeParentName("elion")
+print(f"\n [NEW PARENT NAME] {son.parentname}")
+# print(son.changeParentName("elion"))
+
+# POLYMORPHISM ======single function behaving in different ways, and belong to seperate classes
+
+class Vehicle:
+    def __init__(self, name, sound, model="benz"):
+        self.name = f"{name}"
+        self.sound = f"{sound}"
+        self.model = model     
+
+    def changeSound(self, sound):
+        if not sound:
+            return {"error": "requires sound, none given"}
+        self.sound = f"{sound} is the new vehicle sound for vehicle"
+
+class Car(Vehicle):
+    def __init__(self, name, sound, color, model):
+        super().__init__(name, sound, model)
+        self.color = color
+
+    def changeSound(self, sound):
+        if not sound:
+            return {"error": "requires sound, none given"}
+        self.sound = f"{sound} is the new car sound for car"
+
+vehicle = Vehicle("lorry","zoom")
+print(vehicle.name, vehicle.sound, vehicle.model)
+
+car = Car("suv", "sooom", "red", "2009")
+print(f"NAME: {car.name}, SOUND: {car.sound}, MODEL: {car.model}, COLOR: {car.color}")
+
+# print("="* 40)
+# sound = ["VOOOM", "COOOM"]
+# methods = [vehicle, car]
+# for index, i in enumerate(methods):
+#     if isinstance(i, Vehicle):
+#         i.changeSound(sound[index])
+#         print(i.sound)
+
+# === ENCAPSULATED =========
+class Fruits:
+    def __init__(self, name, color):
+        self.name = name
+        self.__color = color
+
+    def setColor(self, color):
+        """function sets the color property of the instance"""
+        self.color = color
+
+    def getColor(self):
+        """function that returns the encapsulated property"""
+        return self.color
+
+print("="*70)
+fruit = Fruits("mango", "greenish-yellow")
+print(fruit.name)
+print(fruit.__dict__)
+
+fruit.setColor("purple")
+print(fruit.__dict__)
+
+print(fruit.color)
 

@@ -1,0 +1,222 @@
+/* ========================================
+   Index Page - Modern Poll List Styles
+   ======================================== */
+
+/* Page Header */
+.page-header {
+    margin-bottom: var(--spacing-2xl);
+    animation: slideDown 0.6s ease-out;
+}
+
+.page-header h2 {
+    color: var(--gray-900);
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.page-description {
+    color: var(--gray-600);
+    font-size: 1.1rem;
+    max-width: 600px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Question List */
+.question-list {
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.question-item {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.question-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--transition-base);
+}
+
+.question-item:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.question-item:hover::before {
+    transform: scaleY(1);
+}
+
+.question-item h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.35rem;
+    color: var(--gray-900);
+}
+
+.question-item a {
+    color: var(--primary);
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.question-item a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Meta Information */
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-100);
+    color: var(--gray-600);
+    font-size: 0.95rem;
+}
+
+.meta span {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.meta span::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.meta span:first-child::before {
+    content: '📋';
+    width: auto;
+    height: auto;
+    background: none;
+    border-radius: 0;
+}
+
+.meta .date::before {
+    content: '📅';
+    width: auto;
+    height: auto;
+    background: none;
+}
+
+.meta .time-ago::before {
+    content: '⏱️';
+    width: auto;
+    height: auto;
+    background: none;
+}
+
+/* Alert Styles */
+.alert {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    background-color: var(--info);
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+    border: 1px solid #93c5fd;
+    color: #1e40af;
+    text-align: center;
+    animation: slideUp 0.6s ease-out;
+}
+
+.alert p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.alert p:last-child {
+    margin-bottom: 0;
+}
+
+/* Empty State */
+.alert-info {
+    text-align: center;
+    padding: var(--spacing-3xl) var(--spacing-xl);
+}
+
+.alert-info p {
+    font-size: 1.1rem;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    font-size: 0.95rem;
+}
+
+.breadcrumb-item {
+    color: var(--gray-600);
+}
+
+.breadcrumb-item a {
+    color: var(--primary);
+    transition: color var(--transition-fast);
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primary-dark);
+}
+
+.breadcrumb-item.active {
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+/* Counter Badge */
+.counter-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: var(--spacing-md);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .question-item {
+        padding: var(--spacing-lg);
+    }
+    
+    .meta {
+        gap: var(--spacing-md);
+    }
+}

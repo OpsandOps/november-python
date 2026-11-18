@@ -1,0 +1,50 @@
+{% extends "polls/base.html" %}
+{% load static %}
+
+{% block title %}Latest Polls - Polls App{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'polls/css/index.css' %}">
+{% endblock %}
+
+{% block header_title %}Django Polls{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container">
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item active">Home</li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Latest Polls</h2>
+    <p class="page-description">Vote on current polls and see what others think. Your voice matters!</p>
+</div>
+
+{% if question %}
+    <div class="question-list">
+        {% for q in question %}
+            <div class="question-item">
+                <h3>
+                    <a href="{% url 'polls:details' q.id %}">
+                        {{ q.question_text }}
+                    </a>
+                </h3>
+                
+                <div class="meta">
+                    <span class="question">{{ q.question_text|truncatewords:8 }}</span>
+                    <span class="date">{{ q.pub_date|date:"F j, Y" }}</span>
+                    <span class="time-ago">{{ q.pub_date|timesince }} ago</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <p>No polls are available at this time.</p>
+        <p>Check back later for new questions!</p>
+    </div>
+{% endif %}
+{% endblock %}

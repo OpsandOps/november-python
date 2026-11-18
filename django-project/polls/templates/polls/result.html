@@ -1,0 +1,63 @@
+{% extends "polls/base.html" %}
+{% load static %}
+
+{% block title %}Results: {{ question.question_text }} - Polls App{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'polls/css/results.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'polls:index' %}">Home</a></li>
+        <li><a href="{% url 'polls:details' question.id %}">{{ question.question_text|truncatewords:3 }}</a></li>
+        <li class="breadcrumb-item active">Results</li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <h2>{{ question.question_text }}</h2>
+    
+    {% with total_votes=question.choice_set.all|length %}
+        <p class="total-votes">📊 {{ total_votes }} choice{{ total_votes|pluralize }} | See what people voted for</p>
+    {% endwith %}
+    
+    <div class="results-list">
+        {% for choice in question.choice_set.all %}
+            {% with percentage=choice.votes|floatformat:0 %}
+                <div class="result-item">
+                    <div class="choice-header">
+                        <span class="choice-text">{{ choice.choice_text }}</span>
+                        <span class="vote-count">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div 
+                            class="progress-fill {% cycle 'color-1' 'color-2' 'color-3' 'color-4' 'color-5' %}" 
+                            style="width: {% widthratio choice.votes 100 100 %}%"
+                        >
+                            {% if choice.votes > 0 %}
+                                {% widthratio choice.votes 100 100 %}%
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% if forloop.first %}
+                        <span class="winner-badge">🏆 Leading</span>
+                    {% endif %}
+                </div>
+            {% endwith %}
+        {% empty %}
+            <p>No votes yet.</p>
+        {% endfor %}
+    </div>
+    
+    <div class="actions">
+        <a href="{% url 'polls:details' question.id %}" class="btn">Vote Again</a>
+        <a href="{% url 'polls:index' %}" class="btn btn-secondary">Back to Polls</a>
+    </div>
+</div>
+{% endblock %}

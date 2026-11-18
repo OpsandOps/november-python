@@ -1,0 +1,115 @@
+{% extends "polls/base.html" %}
+{% load static %}
+
+{% block title %}Vote on {{ question.question_text|striptags }} - Polls App{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'polls/css/voteform.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'polls:index' %}">Home</a></li>
+        <li class="breadcrumb-item active">Vote on Question</li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<article class="vote-form-container">
+    <header>
+        <h2>{{ question.question_text }}</h2>
+        <div class="question-meta">
+            <p>
+                <strong>📅 Published:</strong> {{ question.pub_date|date:"F j, Y \a\t g:i A" }}
+                <span class="separator">•</span>
+                <strong>⏱️ Posted:</strong> {{ question.pub_date|timesince }} ago
+                {% if question.author %}
+                    <span class="separator">•</span>
+                    <strong>👤 Author:</strong> {{ question.author.username|title }}
+                {% endif %}
+            </p>
+        </div>
+    </header>
+    
+    {# Error messages #}
+    {% if error_message %}
+        <div class="error">
+            <strong>⚠️ Error!</strong> {{ error_message }}
+        </div>
+    {% endif %}
+    
+    {# Success messages #}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                ✅ {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <section class="voting-section">
+        <h3>Cast Your Vote</h3>
+        
+        <form method="post" action="{% url 'polls:vote' question.id %}" class="vote-form">
+            {% csrf_token %}
+            
+            <fieldset>
+                <legend>Select Your Choice</legend>
+                
+                {% for choice in question.choice_set.all %}
+                    <div class="choice-item">
+                        <input 
+                            type="radio" 
+                            name="choice" 
+                            id="choice-{{ choice.id }}"
+                            value="{{ choice.id }}"
+                            {% if forloop.first %}checked{% endif %}
+                            required
+                        >
+                        <label for="choice-{{ choice.id }}">
+                            <span class="choice-number">{{ forloop.counter }}</span>
+                            <span class="choice-text">{{ choice.choice_text }}</span>
+                            <span class="current-votes">
+                                ({{ choice.votes }} vote{{ choice.votes|pluralize }})
+                            </span>
+                        </label>
+                    </div>
+                {% empty %}
+                    <p class="no-choices">No choices available for this question.</p>
+                {% endfor %}
+            </fieldset>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    ✓ Submit Vote
+                </button>
+                <a href="{% url 'polls:results' question.id %}" class="btn btn-secondary">
+                    📊 View Current Results
+                </a>
+                <a href="{% url 'polls:index' %}" class="btn btn-secondary">
+                    ← Back to Questions
+                </a>
+            </div>
+        </form>
+    </section>
+    
+    {# Question statistics #}
+    <aside class="question-info">
+        <h4>ℹ️ Question Information</h4>
+        <dl>
+            <dt>Total Choices:</dt>
+            <dd>{{ question.choice_set.count }}</dd>
+            
+            <dt>Published:</dt>
+            <dd>{{ question.pub_date|date:"l, F j, Y \a\t g:i A" }}</dd>
+            
+            {% if question.author %}
+                <dt>Author:</dt>
+                <dd>{{ question.author.username|title }}</dd>
+            {% endif %}
+        </dl>
+    </aside>
+</article>
+{% endblock %}

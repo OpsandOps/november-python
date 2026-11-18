@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Django Polls Application - Vote on polls and see real-time results">
+    <meta name="theme-color" content="#6366f1">
+    
+    <title>{% block title %}Polls App{% endblock %}</title>
+    
+    <!-- Load base CSS -->
+    <link rel="stylesheet" href="{% static 'polls/css/base.css' %}">
+    
+    <!-- Block for page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Block for extra head content (meta tags, etc.) -->
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <header role="banner">
+        <div class="container">
+            <h1>{% block header_title %}Django Polls Application{% endblock %}</h1>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <ul>
+                {% block navigation %}
+                <li><a href="{% url 'polls:index' %}">🏠 Home</a></li>
+                <li><a href="#about">ℹ️ About</a></li>
+                <li><a href="#contact">📧 Contact</a></li>
+                {% endblock %}
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main role="main">
+        <div class="container">
+            {# Breadcrumbs block #}
+            {% block breadcrumbs %}{% endblock %}
+            
+            {# Messages/Alerts block #}
+            {% block messages %}{% endblock %}
+            
+            {# Main content block #}
+            <div class="content">
+                {% block content %}
+                <p>This is the default content. Override this block in child templates.</p>
+                {% endblock %}
+            </div>
+            
+            {# Sidebar block (optional) #}
+            {% block sidebar %}{% endblock %}
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            {% block footer %}
+            <p>&copy; {% now "Y" %} Django Polls Application. Built with modern web technologies.</p>
+            {% endblock %}
+        </div>
+    </footer>
+    
+    <!-- Block for extra scripts -->
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends "polls/base.html" %}
+{% load static %}
+
+{% block title %}{{ question.question_text }} - Polls App{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'polls/css/detail.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'polls:index' %}">Home</a></li>
+        <li class="breadcrumb-item active">Question Details</li>
+    </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<article class="question-detail">
+    <header>
+        <h2>{{ question.question_text }}</h2>
+        <div class="question-meta">
+            <p>
+                <strong>📅 Published:</strong> {{ question.pub_date|date:"F j, Y \a\t g:i A" }}
+                <span class="separator">•</span>
+                <strong>⏱️ Updated:</strong> {{ question.pub_date|timesince }} ago
+                {% if question.author %}
+                    <span class="separator">•</span>
+                    <strong>👤 Author:</strong> {{ question.author.username|title }}
+                {% endif %}
+            </p>
+        </div>
+    </header>
+    
+    <section class="voting-section">
+        <h3>Cast Your Vote</h3>
+        
+        {% if error_message %}
+            <div class="error">⚠️ {{ error_message }}</div>
+        {% endif %}
+        
+        <form method="post" action="{% url 'polls:vote' question.id %}" class="vote-form">
+            {% csrf_token %}
+            
+            {% for choice in question.choice_set.all %}
+                <div class="choice-item">
+                    <input 
+                        type="radio" 
+                        name="choice" 
+                        id="choice{{ forloop.counter }}" 
+                        value="{{ choice.id }}"
+                    >
+                    <label for="choice{{ forloop.counter }}">
+                        <span class="choice-text">{{ choice.choice_text }}</span>
+                        <span class="vote-count">({{ choice.votes }} vote{{ choice.votes|pluralize }})</span>
+                    </label>
+                </div>
+            {% empty %}
+                <p class="no-choices">No choices available for this question.</p>
+            {% endfor %}
+            
+            <button type="submit" class="btn-submit">Submit Vote</button>
+        </form>
+    </section>
+    
+    <aside class="question-stats">
+        <h4>📊 Question Statistics</h4>
+        {% with total_votes=question.choice_set.all|length %}
+            <p><strong>Total Choices:</strong> {{ total_votes }}</p>
+        {% endwith %}
+    </aside>
+    
+    <nav class="question-navigation">
+        <a href="{% url 'polls:results' question.id %}" class="btn">View Results</a>
+        <a href="{% url 'polls:index' %}" class="btn btn-secondary">Back to List</a>
+    </nav>
+</article>
+{% endblock %}

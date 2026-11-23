@@ -1,0 +1,163 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+
+{% block title %}Question Form - Polls App{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'polls/css/question_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-section">
+    <h2>{% if question %} 
+        Edit 
+        {% else %}
+        Create
+        {% endif %}
+        Question
+    </h2>
+    
+    <form method="post" id="question-form">
+        {% csrf_token %}
+        <fieldset class="form-fieldset">
+            <legend>Question Details</legend>
+            
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Question Text Field -->
+            <div class="form-group">
+                <label for="{{ form.question_text.id_for_label }}">{{ form.question_text.label }}</label>
+                {{ form.question_text }}
+                {% if form.question_text.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.question_text.errors %}
+                            <small>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if form.question_text.help_text %}
+                    <small class="form-text text-muted">{{ form.question_text.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            <!-- Publication Date Field -->
+            <div class="form-group">
+                <label for="{{ form.pub_date.id_for_label }}">{{ form.pub_date.label }}</label>
+                {{ form.pub_date }}
+                {% if form.pub_date.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.pub_date.errors %}
+                            <small>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if form.pub_date.help_text %}
+                    <small class="form-text text-muted">{{ form.pub_date.help_text|safe }}</small>
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <!-- Choices Section -->
+        {% if question %}
+        <fieldset class="form-fieldset choices-fieldset">
+            <legend>
+                {% if question %} 
+                    Edit 
+                {% else %}
+                    Add
+                {% endif %}
+                Choices
+            </legend>
+
+            {{ formset.management_form }}
+
+            {% if formset.non_form_errors %}
+                <div class="alert alert-danger">
+                    {% for error in formset.non_form_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="choices-container">
+                {% for form in formset %}
+                    <div class="choice-form" data-form-index="{{ forloop.counter0 }}">
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="choice-row">
+                            <!-- Choice Text Field -->
+                            <div class="form-group choice-group">
+                                <label for="{{ form.choice_text.id_for_label }}">Choice Text</label>
+                                {{ form.choice_text }}
+                                {% if form.choice_text.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.choice_text.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Votes Field -->
+                            <div class="form-group choice-group">
+                                <label for="{{ form.votes.id_for_label }}">{{ form.votes.label }}</label>
+                                {{ form.votes }}
+                                {% if form.votes.errors %}
+                                    <div class="alert alert-danger">
+                                        {% for error in form.votes.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Delete Checkbox -->
+                            {% if form.instance.pk %}
+                                <div class="form-group choice-delete">
+                                    <label for="{{ form.DELETE.id_for_label }}" class="checkbox-label">
+                                        {{ form.DELETE }}
+                                        Delete this choice
+                                    </label>
+                                </div>
+                                {{ form.id }}
+                            {% endif %}
+                        </div>
+                        {% if formset.forms|length > 1 or form.instance.pk %}
+                            <hr class="choice-divider">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="extra-choices-info">
+                <small class="text-muted">The form above includes {{ formset|length }} existing choices and {% widthratio formset.extra 1 1 %} empty form(s) for adding new choices.</small>
+            </div>
+        </fieldset>
+        {% endif %}
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if question %}
+                    Update Question
+                {% else %}
+                    Create Question
+                {% endif %}
+            </button>
+            <a href="{% url 'polls:index' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

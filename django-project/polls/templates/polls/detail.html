@@ -74,6 +74,7 @@
     <nav class="question-navigation">
         <a href="{% url 'polls:results' question.id %}" class="btn">View Results</a>
         <a href="{% url 'polls:index' %}" class="btn btn-secondary">Back to List</a>
+        <a href="{% url 'polls:edit_question' question.id %}" class="btn btn-secondary">Edit Question</a>
     </nav>
 </article>
 {% endblock %}

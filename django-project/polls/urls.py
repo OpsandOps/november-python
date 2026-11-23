@@ -13,6 +13,8 @@ urlpatterns = [
     path("<int:question_id>/results/", views.results, name="results"),
     path("<int:question_id>/vote/", views.vote, name="vote"),
     path("data/", views.data, name="data"),
+    path("forms/", views.create_question, name='question_form'),
+    path("<int:question_id>/edit/", views.edit_question, name='edit_question'),
 ]
 
 

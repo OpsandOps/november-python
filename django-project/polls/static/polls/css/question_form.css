@@ -1,0 +1,235 @@
+/* Question Form Styling */
+
+.form-section {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.form-fieldset {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background: white;
+}
+
+.form-fieldset legend {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    padding: 0 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Alert Styling */
+.alert {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert small {
+    display: block;
+    margin: 4px 0;
+}
+
+/* Choices Section */
+.choices-fieldset {
+    margin-top: 30px;
+}
+
+.choices-container {
+    margin: 20px 0;
+}
+
+.choice-form {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 4px;
+    border-left: 4px solid #007bff;
+}
+
+.choice-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.choice-group {
+    margin-bottom: 0;
+}
+
+.choice-delete {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+    margin-bottom: 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.checkbox-label input {
+    margin: 0;
+}
+
+.choice-divider {
+    margin: 15px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.extra-choices-info {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e7f3ff;
+    border-left: 3px solid #007bff;
+    border-radius: 4px;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 13px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .choice-row {
+        grid-template-columns: 1fr;
+    }
+
+    .choice-delete {
+        margin-top: 10px;
+    }
+
+    .form-section {
+        padding: 15px;
+    }
+
+    .form-fieldset {
+        padding: 15px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-section {
+        padding: 10px;
+    }
+
+    .form-fieldset {
+        padding: 10px;
+    }
+
+    .choice-row {
+        gap: 10px;
+    }
+
+    .choice-form {
+        padding: 10px;
+    }
+}
